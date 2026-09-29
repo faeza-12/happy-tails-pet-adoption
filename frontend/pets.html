@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Available Pets - Happy Tails</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🐾 Happy Tails
+        </div>
+
+        <div class="nav-links">
+            <a href="user-dashboard.html">Dashboard</a>
+            <a href="pets.html" aria-current="page">Pets</a>
+            <a href="my-adoption-requests.html">My Requests</a>
+        </div>
+
+        <div>
+
+            <a href="user-dashboard.html"
+               class="back-link">
+                ← Dashboard
+            </a>
+
+            <button
+                id="logoutButton"
+                class="logout-button">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <main class="pets-page">
+
+        <div class="pets-page-header">
+
+            <span class="tag">
+                FIND YOUR FRIEND
+            </span>
+
+            <h1>
+                Pets Waiting for a Home 🏠
+            </h1>
+
+            <p>
+                Meet the lovely pets waiting for their
+                forever family.
+            </p>
+
+            <button
+                id="refreshPets"
+                class="hero-button secondary">
+
+                🔄 Refresh
+
+            </button>
+
+        </div>
+
+
+        <div id="petsContainer"
+             class="pets-grid">
+
+        </div>
+
+        <div id="petsMessage"
+             class="message">
+
+        </div>
+
+    </main>
+
+
+    <script src="js/pets.js"></script>
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

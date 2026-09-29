@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        User Dashboard - Happy Tails
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🐾 Happy Tails
+        </div>
+
+        <div class="nav-links">
+            <a href="user-dashboard.html" aria-current="page">Dashboard</a>
+            <a href="pets.html">Pets</a>
+            <a href="my-adoption-requests.html">My Requests</a>
+        </div>
+
+        <button
+            id="logoutButton"
+            class="logout-button">
+
+            Logout
+
+        </button>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="dashboard">
+        <section class="partner-info-note"><strong>🏠 A community of care</strong><p>Pets on Happy Tails are listed by shelters, rescue centers, pet shops and animal welfare organizations.</p></section>
+
+
+        <!-- ================= WELCOME ================= -->
+
+        <section class="dashboard-header">
+
+            <div>
+
+                <span class="tag">
+                    USER DASHBOARD
+                </span>
+
+                <h1>
+                    Welcome,
+                    <span id="userName">
+                        Friend
+                    </span>!
+                    🐾
+                </h1>
+
+                <p>
+                    Your journey to finding
+                    a new furry friend starts here.
+                </p>
+
+            </div>
+
+
+            <div class="dashboard-pet">
+                🐕
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= PETS ================= -->
+
+        <section
+            class="admin-section user-pet-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="tag">
+                        FIND YOUR FRIEND
+                    </span>
+
+                    <h2>
+                        Pets Waiting for a Home 🏠
+                    </h2>
+
+                    <p>
+                        Meet the lovely pets waiting
+                        for their forever family.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="card-button"
+                    onclick="loadUserPets()">
+
+                    🔄 Refresh
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="userPetList"
+                class="dashboard-grid">
+
+                <p>
+                    Loading pets... 🐾
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= USER OPTIONS ================= -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- FEATURED PETS -->
+
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    ⭐
+                </div>
+
+                <h2>
+                    Featured Pets
+                </h2>
+
+                <p>
+                    Discover adorable pets
+                    available for adoption.
+                </p>
+
+                <button
+                    class="card-button"
+                    onclick="
+                        window.location.href='pets.html'
+                    ">
+
+                    View Pets 🐾
+
+                </button>
+
+            </div>
+
+
+
+            <!-- ADOPTION REQUESTS -->
+
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    ❤️
+                </div>
+
+                <h2>
+                    My Adoption Requests
+                </h2>
+
+                <p>
+                    View your adoption requests
+                    and their current status.
+                </p>
+
+                <button
+                    class="card-button"
+                    onclick="
+                        window.location.href=
+                        'my-adoption-requests.html'
+                    ">
+
+                    View My Requests ❤️
+
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="js/dashboard.js"></script>
+
+
+</body>
+
+</html>

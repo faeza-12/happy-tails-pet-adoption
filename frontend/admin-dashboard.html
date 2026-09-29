@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard - Happy Tails</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🐾 Happy Tails
+        </div>
+
+        <div class="nav-links">
+            <a href="admin-dashboard.html" aria-current="page">Dashboard</a>
+            <a href="#partnerOrganizations">Partners</a>
+            <a href="#petForm">Pets</a>
+            <a href="#adminRequests">Adoption Requests</a>
+        </div>
+
+        <button
+            id="logoutButton"
+            class="logout-button">
+
+            Logout
+
+        </button>
+
+    </nav>
+
+
+    <!-- MAIN DASHBOARD -->
+
+    <main class="dashboard">
+
+
+        <!-- HEADER -->
+
+        <section class="dashboard-header admin-header">
+
+            <div>
+
+                <span class="tag">
+                    ADMIN DASHBOARD
+                </span>
+
+                <h1>
+                    Welcome, Admin! 🛠️
+                </h1>
+
+                <p>
+                    Manage the Happy Tails pet
+                    adoption system.
+                </p>
+
+            </div>
+
+            <div class="dashboard-pet">
+                🐱
+            </div>
+
+        </section>
+
+
+        <section class="admin-section" id="partnerOrganizations">
+            <div class="section-heading"><div><span class="tag">PARTNER ORGANIZATIONS</span><h2>Partner Organizations 🏢</h2><p>Review organization registrations and verification status.</p></div><button id="refreshPartners" class="card-button" type="button">Refresh</button></div>
+            <div id="partnerSummary" class="partner-summary" aria-live="polite"></div>
+            <p id="partnerAdminMessage" class="message" role="status"></p><div id="adminPartnerList" class="admin-request-list"></div>
+        </section>
+
+        <!-- PET MANAGEMENT -->
+
+        <section class="admin-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="tag">
+                        PET MANAGEMENT
+                    </span>
+
+                    <h2>
+                        Add a New Pet 🐾
+                    </h2>
+
+                    <p>
+                        Add pets that are available
+                        for adoption.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ADD PET FORM -->
+
+            <form
+                id="petForm"
+                class="pet-form">
+
+
+                <div class="form-group">
+
+                    <label for="petName">
+                        Pet Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="petName"
+                        placeholder="Example: Bruno"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="petType">
+                        Type
+                    </label>
+
+                    <select
+                        id="petType"
+                        required>
+
+                        <option value="">
+                            Select type
+                        </option>
+
+                        <option value="Dog">
+                            🐶 Dog
+                        </option>
+
+                        <option value="Cat">
+                            🐱 Cat
+                        </option>
+
+                        <option value="Rabbit">
+                            🐰 Rabbit
+                        </option>
+
+                        <option value="Bird">
+                            🐦 Bird
+                        </option>
+
+                        <option value="Other">
+                            🐾 Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="petBreed">
+                        Breed
+                    </label>
+
+                    <input
+                        type="text"
+                        id="petBreed"
+                        placeholder="Example: Labrador">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="petAge">
+                        Age
+                    </label>
+
+                    <input
+                        type="number"
+                        id="petAge"
+                        min="0"
+                        placeholder="Example: 2"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="petGender">
+                        Gender
+                    </label>
+
+                    <select
+                        id="petGender">
+
+                        <option value="">
+                            Select gender
+                        </option>
+
+                        <option value="Male">
+                            Male
+                        </option>
+
+                        <option value="Female">
+                            Female
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="petStatus">
+                        Status
+                    </label>
+
+                    <select
+                        id="petStatus">
+
+                        <option value="AVAILABLE">
+                            🟢 Available
+                        </option>
+
+                        <option value="ADOPTED">
+                            ❤️ Adopted
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group full-form-width">
+
+                    <label for="petImage">
+                        Pet Emoji
+                    </label>
+
+                    <input
+                        type="text"
+                        id="petImage"
+                        placeholder="Example: 🐶"
+                        maxlength="10">
+
+                </div>
+
+
+                <div class="form-group full-form-width">
+
+                    <label for="petDescription">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="petDescription"
+                        rows="4"
+                        placeholder="Tell users something about this pet..."></textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-button">
+
+                    ➕ Add Pet
+
+                </button>
+
+
+                <div
+                    id="petMessage"
+                    class="message">
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- PET LIST -->
+
+        <section class="admin-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="tag">
+                        PETS IN DATABASE
+                    </span>
+
+                    <h2>
+                        Current Pets 🐶🐱
+                    </h2>
+
+                    <p>
+                        Pets currently stored in
+                        the Happy Tails database.
+                    </p>
+
+                </div>
+
+                <button
+                    class="card-button"
+                    onclick="loadPets()">
+
+                    🔄 Refresh
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="petList"
+                class="pet-list">
+
+                <p>
+                    Loading pets... 🐾
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="admin-section" id="adminRequests">
+            <div class="section-heading">
+                <div>
+                    <span class="tag">ADOPTION REVIEW</span>
+                    <h2>Adoption Requests</h2>
+                    <p>Review each request and update its status.</p>
+                </div>
+                <button class="card-button" id="refreshRequests" type="button">Refresh requests</button>
+            </div>
+            <p id="requestActionMessage" class="message" role="status"></p>
+            <div id="adminRequestList" class="admin-request-list">
+                <p>Loading adoption requests...</p>
+            </div>
+        </section>
+
+        <!-- OTHER FEATURES -->
+
+        <section class="dashboard-grid">
+
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    👥
+                </div>
+
+                <h2>
+                    Manage Users
+                </h2>
+
+                <p>
+                    View and manage registered
+                    users.
+                </p>
+
+                <button
+                    class="card-button"
+                    onclick="document.getElementById('adminRequests').scrollIntoView({behavior:'smooth'})">
+                    Review Requests
+
+                </button>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    ❤️
+                </div>
+
+                <h2>
+                    Adoption Requests
+                </h2>
+
+                <p>
+                    Review adoption requests
+                    from users.
+                </p>
+
+                <button
+                    class="card-button"
+                    disabled>
+
+                    Coming Soon
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/admin-requests.js"></script>
+    <script src="js/admin-partners.js"></script>
+
+</body>
+
+</html>
