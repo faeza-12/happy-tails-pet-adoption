@@ -1,12 +1,154 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Partner Registration - Happy Tails</title><link rel="stylesheet" href="css/style.css"></head>
-<body><nav class="navbar"><a class="logo" href="index.html">🐾 Happy Tails</a><div class="nav-links"><a href="login.html">Login</a></div></nav>
-<main class="auth-container"><section class="auth-card partner-auth"><span class="tag">PARTNER REGISTRATION</span><h1>Join our adoption community 🏠</h1><p>Register your organization. Pet listings become available after admin approval.</p>
-<form id="partnerRegisterForm" class="pet-form">
-<label>Organization Name<input name="organizationName" required maxlength="150"></label>
-<label>Organization Type<select name="organizationType" required><option value="">Choose type</option><option value="SHELTER">Shelter</option><option value="RESCUE_CENTER">Rescue Center</option><option value="PET_SHOP">Pet Shop</option><option value="ANIMAL_WELFARE_ORGANIZATION">Animal Welfare Organization</option></select></label>
-<label>Contact Person<input name="contactPerson" required maxlength="100"></label><label>Email<input name="email" type="email" required></label>
-<label>Phone<input name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required></label><label>Address<textarea name="address" required maxlength="500"></textarea></label>
-<label>Description<textarea name="description" maxlength="1000"></textarea></label><label>Password<input name="password" type="password" minlength="6" required></label><label>Confirm Password<input name="confirmPassword" type="password" minlength="6" required></label>
-<p id="partnerRegisterMessage" class="message" role="status"></p><button class="hero-button primary" type="submit">Submit for approval</button></form>
-<p class="auth-footer">Already registered? <a href="login.html">Log in</a></p></section></main><script src="js/partner-register.js"></script></body></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Partner Registration | Happy Tails</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="partner-page">
+
+    <nav class="navbar">
+        <a class="logo" href="index.html">🐾 Happy Tails</a>
+        <div class="nav-links">
+            <a href="login.html">Login</a>
+        </div>
+    </nav>
+
+    <main class="partner-layout">
+
+        <section class="partner-intro">
+            <span class="tag">OUR PARTNERS</span>
+
+            <h1>Every pet deserves a place to call home. 🐾</h1>
+
+            <p>
+                Are you a shelter, rescue centre, or animal-loving
+                organization? Join Happy Tails and help pets find
+                their forever families.
+            </p>
+
+            <div class="partner-benefits">
+                <div class="benefit">
+                    <span>🏡</span>
+                    <div>
+                        <h3>Showcase your pets</h3>
+                        <p>Share the animals waiting for a loving home.</p>
+                    </div>
+                </div>
+
+                <div class="benefit">
+                    <span>💗</span>
+                    <div>
+                        <h3>Connect with adopters</h3>
+                        <p>Help potential families discover your pets.</p>
+                    </div>
+                </div>
+
+                <div class="benefit">
+                    <span>🤝</span>
+                    <div>
+                        <h3>Make a difference</h3>
+                        <p>Be part of a community that cares about animals.</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="partner-note">
+                Your organization will be reviewed by an administrator
+                before you can publish pet listings.
+            </p>
+        </section>
+
+        <section class="auth-card partner-auth">
+            <span class="tag">PARTNER REGISTRATION</span>
+            <h2>Join our adoption community 🏠</h2>
+            <p>Tell us a little about your organization.</p>
+
+            <form id="partnerRegisterForm" class="pet-form">
+
+                <label>
+                    Organization Name
+                    <input name="organizationName" required maxlength="150"
+                           autocomplete="organization">
+                </label>
+
+                <label>
+                    Organization Type
+                    <select name="organizationType" required>
+                        <option value="">Choose type</option>
+                        <option value="SHELTER">Animal Shelter</option>
+                        <option value="RESCUE_CENTER">Rescue Center</option>
+                        <option value="PET_SHOP">Pet Shop</option>
+                        <option value="ANIMAL_WELFARE_ORGANIZATION">
+                            Animal Welfare Organization
+                        </option>
+                    </select>
+                </label>
+
+                <label>
+                    Contact Person
+                    <input name="contactPerson" required maxlength="100"
+                           autocomplete="name">
+                </label>
+
+                <label>
+                    Email Address
+                    <input name="email" type="email" required
+                           autocomplete="email">
+                </label>
+
+                <label>
+                    Phone Number
+                    <input name="phone" type="tel" inputmode="numeric"
+                           pattern="[0-9]{10}" maxlength="10"
+                           title="Enter a 10-digit phone number"
+                           autocomplete="tel" required>
+                </label>
+
+                <label>
+                    Organization Address
+                    <textarea name="address" required maxlength="500"
+                              rows="3"></textarea>
+                </label>
+
+                <label>
+                    About Your Organization
+                    <textarea name="description" maxlength="1000"
+                              rows="3"
+                              placeholder="Tell us about your work with animals..."></textarea>
+                </label>
+
+                <label>
+                    Password
+                    <input name="password" type="password" minlength="6"
+                           autocomplete="new-password" required>
+                </label>
+
+                <label>
+                    Confirm Password
+                    <input name="confirmPassword" type="password"
+                           minlength="6" autocomplete="new-password"
+                           required>
+                </label>
+
+                <p id="partnerRegisterMessage" class="message"
+                   role="status" aria-live="polite"></p>
+
+                <button class="hero-button primary partner-submit"
+                        type="submit">
+                    Submit for Approval →
+                </button>
+            </form>
+
+            <p class="auth-footer">
+                Already registered?
+                <a href="login.html">Log in</a>
+            </p>
+        </section>
+
+    </main>
+
+    <script src="js/partner-register.js"></script>
+</body>
+</html>

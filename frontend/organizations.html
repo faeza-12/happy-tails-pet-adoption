@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Shelters | Happy Tails</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fffaf5;
+            color: #382b27;
+        }
+        nav {
+            padding: 18px 7%;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px #0000000d;
+        }
+        nav a { color: #754631; text-decoration: none; margin-right: 14px; }
+        header { text-align: center; padding: 42px 16px 24px; }
+        header h1 { color: #754631; margin-bottom: 8px; }
+        .search-area {
+            display: flex;
+            gap: 10px;
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d8c7bd;
+            border-radius: 8px;
+            font: inherit;
+        }
+        button {
+            padding: 11px 16px;
+            border: 0;
+            border-radius: 8px;
+            background: #80533d;
+            color: white;
+            cursor: pointer;
+            font: inherit;
+        }
+        button:disabled { opacity: .6; cursor: wait; }
+        main { max-width: 1100px; margin: 24px auto; padding: 0 16px 48px; }
+        #message { text-align: center; margin: 18px 0; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+        }
+        .card {
+            background: white;
+            border: 1px solid #eee0d7;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 5px 18px #00000008;
+        }
+        .card h2 { color: #754631; margin-top: 0; }
+        .muted { color: #74665f; line-height: 1.5; overflow-wrap: anywhere; }
+        .pet { border-top: 1px solid #eee0d7; margin-top: 16px; padding-top: 16px; }
+        .pet h3 { margin-bottom: 6px; }
+        .adoption-form { margin-top: 12px; }
+        .adoption-form label { display: block; margin: 8px 0; }
+        .adoption-form textarea { resize: vertical; }
+        .small-message { font-size: .92rem; margin-top: 8px; }
+        @media (max-width: 520px) {
+            .search-area { flex-direction: column; }
+            nav { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <strong>🐾 Happy Tails</strong>
+        <div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="pets.html">All Pets</a>
+            <a href="organizations.html">Find Shelters</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Find Your Perfect Shelter 🐶</h1>
+        <p>Search approved shelters and organizations, then explore their available pets.</p>
+    </header>
+
+    <form class="search-area" id="searchForm">
+        <input id="keyword" type="search" maxlength="100"
+               placeholder="Search by shelter name or organization type"
+               aria-label="Search organizations">
+        <button id="searchButton" type="submit">Search</button>
+    </form>
+
+    <main>
+        <p id="message" role="status">Loading approved organizations...</p>
+        <section id="organizationList" class="grid"></section>
+    </main>
+
+    <script src="js/organizations.js"></script>
+</body>
+</html>

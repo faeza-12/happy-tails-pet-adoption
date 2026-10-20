@@ -97,6 +97,16 @@ public class PetAdoptionServer {
         server.createContext("/api/partner/", this::handlePartnerApi);
         server.createContext("/api/admin/partners", this::handleAdminPartners);
 
+        // Public organization search and organization pets
+        server.createContext(
+                "/api/partners/search",
+                this::handlePublicPartnerSearch
+        );
+        server.createContext(
+                "/api/partners/pets",
+                this::handlePublicPartnerPets
+        );
+
 
         server.createContext(
                 "/api/login",
@@ -1845,6 +1855,98 @@ public class PetAdoptionServer {
             sendJson(exchange,405,jsonError("Method not allowed."));
         }catch(SecurityException e){sendJson(exchange,403,jsonError(e.getMessage()));}catch(NumberFormatException e){sendJson(exchange,400,jsonError("A valid admin and partner ID are required."));}catch(Exception e){e.printStackTrace();sendJson(exchange,500,jsonError("Partner administration failed."));}
     }
+
+    // =====================================================
+    // PUBLIC SEARCH FOR APPROVED ORGANIZATIONS
+    // =====================================================
+
+    private void handlePublicPartnerSearch(HttpExchange exchange) throws IOException {
+        addCorsHeaders(exchange);
+
+        if (exchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+            exchange.sendResponseHeaders(204, -1);
+            return;
+        }
+
+        if (!exchange.getRequestMethod().equalsIgnoreCase("GET")) {
+            sendJson(exchange, 405, jsonError("Method not allowed."));
+            return;
+        }
+
+        try {
+            Map<String, String> query =
+                    parseFormData(exchange.getRequestURI().getRawQuery());
+            String keyword = query.getOrDefault("keyword", "").trim();
+
+            if (keyword.length() > 100) {
+                sendJson(exchange, 400,
+                        jsonError("Search text must be 100 characters or fewer."));
+                return;
+            }
+
+            List<Partner> partners = partnerService.searchApproved(keyword);
+            StringBuilder json =
+                    new StringBuilder("{\"success\":true,\"partners\":[");
+
+            for (int i = 0; i < partners.size(); i++) {
+                if (i > 0) {
+                    json.append(',');
+                }
+                json.append(partnerToJson(partners.get(i)));
+            }
+
+            json.append("]}");
+            sendJson(exchange, 200, json.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            sendJson(exchange, 500, jsonError("Could not search organizations."));
+        }
+    }
+
+
+    // =====================================================
+    // PUBLIC PET LIST FOR AN APPROVED ORGANIZATION
+    // =====================================================
+
+    private void handlePublicPartnerPets(HttpExchange exchange) throws IOException {
+        addCorsHeaders(exchange);
+
+        if (exchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+            exchange.sendResponseHeaders(204, -1);
+            return;
+        }
+
+        if (!exchange.getRequestMethod().equalsIgnoreCase("GET")) {
+            sendJson(exchange, 405, jsonError("Method not allowed."));
+            return;
+        }
+
+        try {
+            Map<String, String> query =
+                    parseFormData(exchange.getRequestURI().getRawQuery());
+            int partnerId = Integer.parseInt(
+                    query.getOrDefault("partnerId", "0"));
+
+            if (partnerId <= 0) {
+                sendJson(exchange, 400,
+                        jsonError("A valid organization ID is required."));
+                return;
+            }
+
+            List<Pet> pets = partnerService.availablePetsForPartner(partnerId);
+            sendJson(exchange, 200,
+                    "{\"success\":true,\"pets\":" + petsToJson(pets) + "}");
+        } catch (NumberFormatException e) {
+            sendJson(exchange, 400, jsonError("Invalid organization ID."));
+        } catch (IllegalArgumentException e) {
+            sendJson(exchange, 400, jsonError(e.getMessage()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            sendJson(exchange, 500,
+                    jsonError("Could not load organization pets."));
+        }
+    }
+
 
     private Pet petFrom(Map<String,String> d) {
         String name=d.getOrDefault("name","").trim(), type=d.getOrDefault("type","").trim();

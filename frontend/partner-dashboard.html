@@ -1,11 +1,199 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Partner Dashboard - Happy Tails</title><link rel="stylesheet" href="css/style.css"></head>
-<body><nav class="navbar"><a class="logo" href="partner-dashboard.html">🐾 Happy Tails</a><div class="nav-links"><a href="#partnerPets">My Pets</a><a href="#partnerRequests">Adoption Requests</a><a href="#organizationProfile">Organization</a></div><button id="partnerLogout" class="logout-button">Logout</button></nav>
-<main class="dashboard"><header class="dashboard-header"><div><span class="tag">PARTNER DASHBOARD</span><h1>Welcome, <span id="organizationName">Partner</span></h1><p>Manage your organization’s pet listings and follow adoption requests.</p></div><div class="dashboard-pet">🏠</div></header>
-<section class="partner-status-panel"><h2>Organization status: <span id="partnerStatus">Loading</span></h2><p id="partnerStatusMessage" role="status"></p></section>
-<section id="partnerManagement" hidden>
-<section id="organizationProfile" class="admin-section"><div class="section-heading"><div><span class="tag">ORGANIZATION PROFILE</span><h2 id="profileHeading">Your Organization</h2></div></div><p id="partnerProfileDetails"></p></section>
-<section id="partnerPets" class="admin-section"><div class="section-heading"><div><span class="tag">MY PETS</span><h2>Manage your listings 🐾</h2></div></div>
-<form id="partnerPetForm" class="pet-form"><input type="hidden" name="petId"><label>Pet Name<input name="name" maxlength="100" required></label><label>Type<input name="type" maxlength="50" placeholder="Dog or Cat" required></label><label>Breed<input name="breed" maxlength="100"></label><label>Age<input name="age" type="number" min="0" max="100" required></label><label>Gender<select name="gender"><option>Not specified</option><option>Male</option><option>Female</option></select></label><label>Description<textarea name="description" maxlength="1000"></textarea></label><label>Image / Emoji<input name="imageUrl" maxlength="500" placeholder="🐶"></label><div class="partner-form-actions"><button class="hero-button primary" id="partnerPetSubmit" type="submit">Add Pet</button><button class="card-button" id="cancelPetEdit" type="button" hidden>Cancel edit</button></div></form>
-<p id="partnerPetMessage" class="message" role="status"></p><div id="partnerPetList" class="pets-grid"></div></section>
-<section id="partnerRequests" class="admin-section"><div class="section-heading"><div><span class="tag">ADOPTION REQUESTS</span><h2>Requests for your pets ❤️</h2><p>Final approval remains with Happy Tails admins.</p></div><button id="refreshPartnerRequests" class="card-button" type="button">Refresh</button></div><div id="partnerRequestList" class="admin-request-list"></div></section></section></main>
-<script src="js/partner-dashboard.js"></script></body></html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Partner Dashboard | Happy Tails</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="partner-dashboard-page">
+
+<nav class="navbar">
+    <a class="logo" href="partner-dashboard.html">🐾 Happy Tails</a>
+    <div class="nav-links">
+        <a href="#partnerPets">My Pets</a>
+        <a href="#partnerRequests">Adoption Requests</a>
+        <a href="#organizationProfile">Organization</a>
+    </div>
+    <button id="partnerLogout" class="logout-button" type="button">Logout</button>
+</nav>
+
+<main class="dashboard partner-dashboard">
+
+    <header class="partner-welcome">
+        <div class="partner-welcome-text">
+            <span class="tag">PARTNER DASHBOARD</span>
+            <h1>Welcome back, <span id="organizationName">Partner</span>! 🐾</h1>
+            <p>Your little space to help pets find loving homes.</p>
+            <a href="#partnerPets" class="hero-button primary partner-cta">
+                Manage my pets
+            </a>
+        </div>
+        <div class="partner-welcome-art" aria-hidden="true">🐕</div>
+    </header>
+
+    <section class="partner-status-panel">
+        <div class="partner-status-icon">🏠</div>
+        <div>
+            <h2>Organization verification</h2>
+            <span id="partnerStatus" class="partner-verification-badge">Loading...</span>
+            <p id="partnerStatusMessage" role="status">
+                Checking your organization status...
+            </p>
+        </div>
+    </section>
+
+    <div id="partnerManagement" hidden>
+
+        <section id="organizationProfile" class="partner-section">
+            <div class="partner-section-heading">
+                <div>
+                    <span class="tag">YOUR ORGANIZATION</span>
+                    <h2 id="profileHeading">Organization profile</h2>
+                    <p>Your registered organization details.</p>
+                </div>
+                <span class="partner-heading-icon" aria-hidden="true">🏡</span>
+            </div>
+
+            <div class="partner-profile-card">
+                <div class="partner-profile-avatar" aria-hidden="true">🏠</div>
+                <p id="partnerProfileDetails"></p>
+            </div>
+        </section>
+
+        <section id="partnerPets" class="partner-section">
+            <div class="partner-section-heading">
+                <div>
+                    <span class="tag">PET MANAGEMENT</span>
+                    <h2>Meet your furry friends 🐾</h2>
+                    <p>Add and manage the pets listed by your organization.</p>
+                </div>
+                <span class="partner-heading-icon" aria-hidden="true">🐶</span>
+            </div>
+
+            <div class="partner-form-card">
+                <div class="partner-form-title">
+                    <span class="partner-form-icon">＋</span>
+                    <div>
+                        <h3>Add a pet listing</h3>
+                        <p>Help someone find their new best friend.</p>
+                    </div>
+                </div>
+
+                <form id="partnerPetForm" class="partner-pet-form">
+                    <input type="hidden" name="petId">
+
+                    <div class="partner-form-grid">
+                        <label>
+                            Pet name <span>*</span>
+                            <input name="name" maxlength="100"
+                                   placeholder="e.g. Milo" required>
+                        </label>
+
+                        <label>
+                            Animal type <span>*</span>
+                            <select name="type" required>
+                                <option value="">Choose an animal</option>
+                                <option value="Dog">Dog</option>
+                                <option value="Cat">Cat</option>
+                                <option value="Rabbit">Rabbit</option>
+                                <option value="Bird">Bird</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </label>
+
+                        <label>
+                            Breed
+                            <input name="breed" maxlength="100"
+                                   placeholder="e.g. Indie">
+                        </label>
+
+                        <label>
+                            Age (years) <span>*</span>
+                            <input name="age" type="number" min="0" max="100"
+                                   placeholder="e.g. 2" required>
+                        </label>
+
+                        <label>
+                            Gender
+                            <select name="gender">
+                                <option value="Not specified">Not specified</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </label>
+
+                        <label>
+                            Photo URL or emoji
+                            <input name="imageUrl" maxlength="500"
+                                   placeholder="🐶 or image URL">
+                        </label>
+
+                        <label class="partner-description-field">
+                            About this pet
+                            <textarea name="description" maxlength="1000"
+                                      rows="4"
+                                      placeholder="Tell adopters about this pet's personality..."></textarea>
+                        </label>
+                    </div>
+
+                    <div class="partner-form-actions">
+                        <button class="hero-button primary" id="partnerPetSubmit"
+                                type="submit">＋ Add Pet</button>
+                        <button class="card-button" id="cancelPetEdit"
+                                type="button" hidden>Cancel edit</button>
+                    </div>
+                </form>
+
+                <p id="partnerPetMessage" class="message" role="status"></p>
+            </div>
+
+            <div class="partner-list-heading">
+                <div>
+                    <h3>Your listings</h3>
+                    <p>Only manage pets belonging to your organization.</p>
+                </div>
+            </div>
+
+            <div id="partnerPetList" class="pets-grid partner-pets-grid">
+                <p class="partner-empty-state">Loading your pet listings...</p>
+            </div>
+        </section>
+
+        <section id="partnerRequests" class="partner-section">
+            <div class="partner-section-heading">
+                <div>
+                    <span class="tag">ADOPTION ACTIVITY</span>
+                    <h2>Adoption requests ❤️</h2>
+                    <p>Follow requests made for pets listed by your organization.</p>
+                </div>
+                <button id="refreshPartnerRequests" class="card-button"
+                        type="button">↻ Refresh</button>
+            </div>
+
+            <div class="partner-notice">
+                <span aria-hidden="true">ℹ️</span>
+                <p>
+                    <strong>How decisions work:</strong>
+                    Happy Tails admins review and approve or reject adoption
+                    requests. This page displays the decision; partners cannot
+                    change request statuses.
+                </p>
+            </div>
+
+            <div id="partnerRequestList" class="admin-request-list partner-request-grid">
+                <p class="partner-empty-state">Loading adoption requests...</p>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<footer class="partner-footer">
+    Made with ❤️ for pets waiting for a home · Happy Tails
+</footer>
+
+<script src="js/partner-dashboard.js"></script>
+</body>
+</html>
