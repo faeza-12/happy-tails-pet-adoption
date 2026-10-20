@@ -1,0 +1,421 @@
+/* ==========================================================================
+   Happy Tails - Minimal Partner Portal Stylesheet
+   Clean, modern, uncluttered, distraction-free design (No heavy photos)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap');
+
+:root {
+    --pm-primary: #d9623c;
+    --pm-primary-hover: #c4522e;
+    --pm-primary-subtle: #fff4ef;
+    --pm-primary-ring: rgba(217, 98, 60, 0.18);
+    
+    --pm-bg: #f9f6f2;
+    --pm-card-bg: #ffffff;
+    --pm-surface-muted: #f5efe9;
+    
+    --pm-text-title: #1f1915;
+    --pm-text-body: #5e5148;
+    --pm-text-subtle: #8c7e75;
+    
+    --pm-border: #e8ded6;
+    --pm-border-focus: #d9623c;
+    
+    --pm-radius-sm: 8px;
+    --pm-radius-md: 14px;
+    --pm-radius-lg: 20px;
+    --pm-radius-full: 9999px;
+
+    --pm-shadow: 0 10px 30px rgba(40, 25, 15, 0.06);
+    --pm-shadow-sm: 0 4px 12px rgba(40, 25, 15, 0.04);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body.partner-minimal-page {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--pm-bg);
+    color: var(--pm-text-body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Minimal Top Brand Bar */
+.pm-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.pm-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--pm-text-title);
+    letter-spacing: -0.3px;
+    transition: transform 0.2s ease;
+}
+
+.pm-logo:hover {
+    transform: translateY(-1px);
+}
+
+.pm-logo .paw {
+    color: var(--pm-primary);
+    font-size: 22px;
+}
+
+.pm-badge {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    background: var(--pm-primary-subtle);
+    color: var(--pm-primary);
+    padding: 3px 10px;
+    border-radius: var(--pm-radius-full);
+    border: 1px solid rgba(217, 98, 60, 0.2);
+}
+
+/* Auth Card Container */
+.pm-card {
+    width: 100%;
+    max-width: 520px;
+    background: var(--pm-card-bg);
+    border-radius: var(--pm-radius-lg);
+    box-shadow: var(--pm-shadow);
+    border: 1px solid var(--pm-border);
+    padding: 36px 32px;
+    transition: box-shadow 0.2s ease;
+}
+
+.pm-card.pm-card-login {
+    max-width: 440px;
+}
+
+/* Segmented Switcher (Login / Register) */
+.pm-tabs {
+    display: flex;
+    background: var(--pm-surface-muted);
+    padding: 4px;
+    border-radius: var(--pm-radius-md);
+    margin-bottom: 24px;
+    border: 1px solid var(--pm-border);
+}
+
+.pm-tab {
+    flex: 1;
+    text-align: center;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--pm-text-subtle);
+    text-decoration: none;
+    border-radius: calc(var(--pm-radius-md) - 3px);
+    transition: all 0.2s ease;
+}
+
+.pm-tab.active {
+    background: #ffffff;
+    color: var(--pm-text-title);
+    font-weight: 700;
+    box-shadow: var(--pm-shadow-sm);
+}
+
+/* Titles */
+.pm-title-group {
+    margin-bottom: 22px;
+    text-align: left;
+}
+
+.pm-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--pm-text-title);
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+}
+
+.pm-subtitle {
+    font-size: 13px;
+    color: var(--pm-text-subtle);
+    line-height: 1.45;
+}
+
+/* Organization Type Minimal Pill Selector */
+.pm-type-pills {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.pm-type-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #ffffff;
+    border: 1.5px solid var(--pm-border);
+    border-radius: var(--pm-radius-md);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--pm-text-body);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.pm-type-pill:hover {
+    border-color: var(--pm-primary);
+    background: var(--pm-primary-subtle);
+}
+
+.pm-type-pill.selected {
+    border-color: var(--pm-primary);
+    background: var(--pm-primary-subtle);
+    color: var(--pm-primary);
+    font-weight: 700;
+}
+
+.pm-type-pill .pill-icon {
+    font-size: 16px;
+    line-height: 1;
+}
+
+/* Hidden synced select */
+.pm-hidden-select {
+    display: none;
+}
+
+/* Form Fields */
+.pm-field {
+    margin-bottom: 15px;
+}
+
+.pm-field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.pm-label-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+}
+
+.pm-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--pm-text-title);
+    letter-spacing: 0.1px;
+}
+
+.pm-label span.req {
+    color: var(--pm-primary);
+}
+
+.pm-counter {
+    font-size: 11px;
+    color: var(--pm-text-subtle);
+}
+
+.pm-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.pm-input,
+.pm-textarea {
+    width: 100%;
+    padding: 11px 14px;
+    font-family: inherit;
+    font-size: 13.5px;
+    color: var(--pm-text-title);
+    background: #ffffff;
+    border: 1.5px solid var(--pm-border);
+    border-radius: var(--pm-radius-md);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.pm-input:focus,
+.pm-textarea:focus {
+    border-color: var(--pm-primary);
+    box-shadow: 0 0 0 3px var(--pm-primary-ring);
+}
+
+.pm-input::placeholder,
+.pm-textarea::placeholder {
+    color: #a89a91;
+    font-size: 13px;
+}
+
+.pm-textarea {
+    min-height: 70px;
+    resize: vertical;
+    line-height: 1.45;
+}
+
+/* Password Toggle Icon */
+.pm-pass-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    color: var(--pm-text-subtle);
+    padding: 4px;
+    line-height: 1;
+    border-radius: 4px;
+}
+
+.pm-pass-toggle:hover {
+    color: var(--pm-primary);
+}
+
+/* Submit Button */
+.pm-submit-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 13px 20px;
+    background: var(--pm-primary);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--pm-radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(217, 98, 60, 0.22);
+}
+
+.pm-submit-btn:hover:not(:disabled) {
+    background: var(--pm-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(217, 98, 60, 0.28);
+}
+
+.pm-submit-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Response / Message Alerts */
+.pm-message {
+    margin-top: 14px;
+    padding: 0;
+    border-radius: var(--pm-radius-md);
+    font-size: 13px;
+    line-height: 1.4;
+    transition: all 0.2s ease;
+    empty-cells: hide;
+}
+
+.pm-message.success,
+.pm-message.error,
+.pm-message.info {
+    padding: 12px 14px;
+}
+
+.pm-message.success {
+    background: #eefbf4;
+    border: 1px solid #c2eed5;
+    color: #10723d;
+}
+
+.pm-message.error {
+    background: #fdf2f2;
+    border: 1px solid #fac8c8;
+    color: #a82020;
+}
+
+.pm-message.info {
+    background: var(--pm-primary-subtle);
+    border: 1px solid rgba(217, 98, 60, 0.2);
+    color: var(--pm-primary);
+}
+
+/* Links & Footer */
+.pm-footer-links {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--pm-border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--pm-text-subtle);
+}
+
+.pm-footer-links a {
+    color: var(--pm-primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.pm-footer-links a:hover {
+    text-decoration: underline;
+}
+
+.pm-back {
+    display: inline-block;
+    margin-top: 18px;
+    font-size: 12.5px;
+    color: var(--pm-text-subtle);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.pm-back:hover {
+    color: var(--pm-primary);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 520px) {
+    body.partner-minimal-page {
+        padding: 20px 12px;
+    }
+
+    .pm-card {
+        padding: 24px 20px;
+    }
+
+    .pm-field-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .pm-type-pills {
+        grid-template-columns: 1fr;
+    }
+}

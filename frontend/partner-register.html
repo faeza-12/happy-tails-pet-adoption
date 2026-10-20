@@ -1,154 +1,527 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Partner Registration | Happy Tails</title>
-    <link rel="stylesheet" href="css/style.css">
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Register your shelter or animal rescue organization with Happy Tails. Minimal and secure partner registration.">
+
+    <title>Partner Registration - Happy Tails 🐾</title>
+
+
+
+    <link rel="stylesheet" href="css/partner-minimal.css">
+
 </head>
-<body class="partner-page">
 
-    <nav class="navbar">
-        <a class="logo" href="index.html">🐾 Happy Tails</a>
-        <div class="nav-links">
-            <a href="login.html">Login</a>
+
+
+<body class="partner-minimal-page">
+
+
+
+    <!-- Minimal Brand Header -->
+
+    <header class="pm-header">
+
+        <a href="index.html" class="pm-logo" id="partnerBrandLink">
+
+            <span class="paw">🐾</span> Happy Tails
+
+        </a>
+
+        <div>
+
+            <span class="pm-badge">Partner Portal</span>
+
         </div>
-    </nav>
 
-    <main class="partner-layout">
+    </header>
 
-        <section class="partner-intro">
-            <span class="tag">OUR PARTNERS</span>
 
-            <h1>Every pet deserves a place to call home. 🐾</h1>
 
-            <p>
-                Are you a shelter, rescue centre, or animal-loving
-                organization? Join Happy Tails and help pets find
-                their forever families.
+    <!-- Minimal Card Container -->
+
+    <main class="pm-card" id="partnerAuthCard">
+
+
+
+        <!-- Navigation Tabs: Login / Register -->
+
+        <nav class="pm-tabs" aria-label="Partner Portal Navigation">
+
+            <a href="partner-login.html" class="pm-tab" id="tabPartnerLogin">Partner Log In</a>
+
+            <a href="partner-register.html" class="pm-tab active" id="tabPartnerRegister" aria-current="page">Register Organization</a>
+
+        </nav>
+
+
+
+        <div class="pm-title-group">
+
+            <h1 class="pm-title">Organization Registration</h1>
+
+            <p class="pm-subtitle">
+
+                Join our shelter network. Pet listings activate immediately upon admin review.
+
             </p>
 
-            <div class="partner-benefits">
-                <div class="benefit">
-                    <span>🏡</span>
-                    <div>
-                        <h3>Showcase your pets</h3>
-                        <p>Share the animals waiting for a loving home.</p>
-                    </div>
+        </div>
+
+
+
+        <form id="partnerRegisterForm" novalidate>
+
+
+
+            <!-- Organization Type Selector (Minimal Pills) -->
+
+            <div class="pm-field">
+
+                <div class="pm-label-wrap">
+
+                    <span class="pm-label">Organization Type <span class="req">\*</span></span>
+
                 </div>
 
-                <div class="benefit">
-                    <span>💗</span>
-                    <div>
-                        <h3>Connect with adopters</h3>
-                        <p>Help potential families discover your pets.</p>
+
+
+                <div class="pm-type-pills" id="pmTypePills" role="radiogroup" aria-label="Organization Type">
+
+                    <div class="pm-type-pill selected" data-value="SHELTER" role="radio" aria-checked="true" tabindex="0">
+
+                        <span class="pill-icon">🏠</span>
+
+                        <span>Shelter</span>
+
                     </div>
+
+                    <div class="pm-type-pill" data-value="RESCUE_CENTER" role="radio" aria-checked="false" tabindex="0">
+
+                        <span class="pill-icon">🏥</span>
+
+                        <span>Rescue Center</span>
+
+                    </div>
+
+                    <div class="pm-type-pill" data-value="PET_SHOP" role="radio" aria-checked="false" tabindex="0">
+
+                        <span class="pill-icon">🏪</span>
+
+                        <span>Pet Shop</span>
+
+                    </div>
+
+                    <div class="pm-type-pill" data-value="ANIMAL_WELFARE_ORGANIZATION" role="radio" aria-checked="false" tabindex="0">
+
+                        <span class="pill-icon">🤝</span>
+
+                        <span>Welfare Org</span>
+
+                    </div>
+
                 </div>
 
-                <div class="benefit">
-                    <span>🤝</span>
-                    <div>
-                        <h3>Make a difference</h3>
-                        <p>Be part of a community that cares about animals.</p>
+
+
+                <select name="organizationType" id="organizationType" class="pm-hidden-select" required aria-label="Organization Type Select">
+
+                    <option value="SHELTER" selected>Shelter</option>
+
+                    <option value="RESCUE_CENTER">Rescue Center</option>
+
+                    <option value="PET_SHOP">Pet Shop</option>
+
+                    <option value="ANIMAL_WELFARE_ORGANIZATION">Animal Welfare Organization</option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- Organization Name -->
+
+            <div class="pm-field">
+
+                <div class="pm-label-wrap">
+
+                    <label for="organizationName" class="pm-label">Organization Name <span class="req">\*</span></label>
+
+                    <span class="pm-counter" id="orgNameCounter">0/150</span>
+
+                </div>
+
+                <div class="pm-input-wrap">
+
+                    <input 
+
+                        type="text" 
+
+                        id="organizationName" 
+
+                        name="organizationName" 
+
+                        class="pm-input" 
+
+                        placeholder="e.g. Hope Haven Rescue Shelter" 
+
+                        required 
+
+                        maxlength="150"
+
+                        autocomplete="organization"
+
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Row: Contact Person & Email -->
+
+            <div class="pm-field-row">
+
+                <div class="pm-field">
+
+                    <div class="pm-label-wrap">
+
+                        <label for="contactPerson" class="pm-label">Contact Person <span class="req">\*</span></label>
+
+                    </div>
+
+                    <div class="pm-input-wrap">
+
+                        <input 
+
+                            type="text" 
+
+                            id="contactPerson" 
+
+                            name="contactPerson" 
+
+                            class="pm-input" 
+
+                            placeholder="Representative name" 
+
+                            required 
+
+                            maxlength="100"
+
+                            autocomplete="name"
+
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="pm-field">
+
+                    <div class="pm-label-wrap">
+
+                        <label for="email" class="pm-label">Official Email <span class="req">\*</span></label>
+
+                    </div>
+
+                    <div class="pm-input-wrap">
+
+                        <input 
+
+                            type="email" 
+
+                            id="email" 
+
+                            name="email" 
+
+                            class="pm-input" 
+
+                            placeholder="contact@shelter.org" 
+
+                            required 
+
+                            autocomplete="email"
+
+                        >
+
+
                     </div>
                 </div>
             </div>
 
-            <p class="partner-note">
-                Your organization will be reviewed by an administrator
-                before you can publish pet listings.
-            </p>
-        </section>
 
-        <section class="auth-card partner-auth">
-            <span class="tag">PARTNER REGISTRATION</span>
-            <h2>Join our adoption community 🏠</h2>
-            <p>Tell us a little about your organization.</p>
+            <!-- Phone Number -->
 
-            <form id="partnerRegisterForm" class="pet-form">
+            <div class="pm-field">
 
-                <label>
-                    Organization Name
-                    <input name="organizationName" required maxlength="150"
-                           autocomplete="organization">
-                </label>
+                <div class="pm-label-wrap">
 
-                <label>
-                    Organization Type
-                    <select name="organizationType" required>
-                        <option value="">Choose type</option>
-                        <option value="SHELTER">Animal Shelter</option>
-                        <option value="RESCUE_CENTER">Rescue Center</option>
-                        <option value="PET_SHOP">Pet Shop</option>
-                        <option value="ANIMAL_WELFARE_ORGANIZATION">
-                            Animal Welfare Organization
-                        </option>
-                    </select>
-                </label>
+                    <label for="phone" class="pm-label">Phone Number (10 digits) <span class="req">\*</span></label>
 
-                <label>
-                    Contact Person
-                    <input name="contactPerson" required maxlength="100"
-                           autocomplete="name">
-                </label>
+                    <span class="pm-counter" id="phoneCounter">0/10</span>
 
-                <label>
-                    Email Address
-                    <input name="email" type="email" required
-                           autocomplete="email">
-                </label>
+                </div>
 
-                <label>
-                    Phone Number
-                    <input name="phone" type="tel" inputmode="numeric"
-                           pattern="[0-9]{10}" maxlength="10"
-                           title="Enter a 10-digit phone number"
-                           autocomplete="tel" required>
-                </label>
+                <div class="pm-input-wrap">
 
-                <label>
-                    Organization Address
-                    <textarea name="address" required maxlength="500"
-                              rows="3"></textarea>
-                </label>
+                    <input 
 
-                <label>
-                    About Your Organization
-                    <textarea name="description" maxlength="1000"
-                              rows="3"
-                              placeholder="Tell us about your work with animals..."></textarea>
-                </label>
+                        type="tel" 
 
-                <label>
-                    Password
-                    <input name="password" type="password" minlength="6"
-                           autocomplete="new-password" required>
-                </label>
+                        id="phone" 
 
-                <label>
-                    Confirm Password
-                    <input name="confirmPassword" type="password"
-                           minlength="6" autocomplete="new-password"
-                           required>
-                </label>
+                        name="phone" 
 
-                <p id="partnerRegisterMessage" class="message"
-                   role="status" aria-live="polite"></p>
+                        class="pm-input" 
 
-                <button class="hero-button primary partner-submit"
-                        type="submit">
-                    Submit for Approval →
-                </button>
-            </form>
+                        placeholder="9876543210" 
 
-            <p class="auth-footer">
-                Already registered?
-                <a href="login.html">Log in</a>
-            </p>
-        </section>
+                        inputmode="numeric" 
+
+                        pattern="[0-9]{10}" 
+
+                        maxlength="10" 
+
+                        required 
+
+                        autocomplete="tel-national"
+
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Address -->
+
+            <div class="pm-field">
+
+                <div class="pm-label-wrap">
+
+                    <label for="address" class="pm-label">Facility Address <span class="req">\*</span></label>
+
+                    <span class="pm-counter" id="addressCounter">0/500</span>
+
+                </div>
+
+                <div class="pm-input-wrap">
+
+                    <textarea 
+
+                        id="address" 
+
+                        name="address" 
+
+                        class="pm-textarea" 
+
+                        placeholder="Street, city, state, postal code" 
+
+                        required 
+
+                        maxlength="500"
+
+                        rows="2"
+
+                        autocomplete="street-address"
+
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Description (Optional) -->
+
+            <div class="pm-field">
+
+                <div class="pm-label-wrap">
+
+                    <label for="description" class="pm-label">About the Organization</label>
+
+                    <span class="pm-counter" id="descCounter">0/1000</span>
+
+                </div>
+
+                <div class="pm-input-wrap">
+
+                    <textarea 
+
+                        id="description" 
+
+                        name="description" 
+
+                        class="pm-textarea" 
+
+                        placeholder="Brief overview of your rescue activities or facility (optional)" 
+
+                        maxlength="1000"
+
+                        rows="2"
+
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Row: Password & Confirm Password -->
+
+            <div class="pm-field-row">
+
+                <div class="pm-field">
+
+                    <div class="pm-label-wrap">
+
+                        <label for="password" class="pm-label">Password <span class="req">\*</span></label>
+
+                    </div>
+
+                    <div class="pm-input-wrap">
+
+                        <input 
+
+                            type="password" 
+
+                            id="password" 
+
+                            name="password" 
+
+                            class="pm-input" 
+
+                            placeholder="Min. 6 chars" 
+
+                            minlength="6" 
+
+                            required 
+
+                            autocomplete="new-password"
+
+                        >
+
+                        <button type="button" class="pm-pass-toggle" id="togglePassword" aria-label="Toggle password visibility">👁️</button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="pm-field">
+
+                    <div class="pm-label-wrap">
+
+                        <label for="confirmPassword" class="pm-label">Confirm Password <span class="req">\*</span></label>
+
+                    </div>
+
+                    <div class="pm-input-wrap">
+
+                        <input 
+
+                            type="password" 
+
+                            id="confirmPassword" 
+
+                            name="confirmPassword" 
+
+                            class="pm-input" 
+
+                            placeholder="Re-enter password" 
+
+                            minlength="6" 
+
+                            required 
+
+                            autocomplete="new-password"
+
+                        >
+
+                        <button type="button" class="pm-pass-toggle" id="toggleConfirmPassword" aria-label="Toggle confirm password visibility">👁️</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Alert Message Box -->
+
+            <div id="partnerRegisterMessage" class="pm-message message" role="status" aria-live="polite"></div>
+
+
+
+            <!-- Submit Button -->
+
+            <button type="submit" class="pm-submit-btn" id="submitPartnerBtn">
+
+                <span>Submit for Approval</span>
+
+                <span aria-hidden="true">→</span>
+
+            </button>
+
+
+
+        </form>
+
+
+
+        <!-- Footer Links -->
+
+        <div class="pm-footer-links">
+
+            <div>
+
+                Already an approved partner? 
+
+                <a href="partner-login.html" id="linkToPartnerLogin">Log in to Partner Portal</a>
+
+            </div>
+
+            <div>
+
+                Looking to adopt a pet? 
+
+                <a href="register.html">Adopter Account Registration</a>
+
+            </div>
+
+        </div>
+
+
 
     </main>
 
+
+
+    <a href="index.html" class="pm-back">← Back to Happy Tails Home</a>
+
+
+
     <script src="js/partner-register.js"></script>
+
 </body>
+
 </html>
+
+

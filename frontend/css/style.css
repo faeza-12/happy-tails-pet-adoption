@@ -549,6 +549,28 @@ footer {
     box-shadow: 0 7px 20px rgba(220, 112, 72, 0.25);
 }
 
+.nav-partner {
+    padding: 10px 18px;
+    border-radius: 20px;
+    background: #fff4ed;
+    color: #dc7048 !important;
+    border: 1.5px solid #ffd8c7;
+    font-weight: 700 !important;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(220, 112, 72, 0.1);
+}
+
+.nav-partner:hover {
+    background: #dc7048;
+    color: white !important;
+    border-color: #dc7048;
+    box-shadow: 0 6px 18px rgba(220, 112, 72, 0.25);
+    transform: translateY(-2px);
+}
+
 
 /* ================= HERO ================= */
 
