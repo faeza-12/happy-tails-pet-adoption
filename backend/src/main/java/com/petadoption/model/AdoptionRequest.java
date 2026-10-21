@@ -13,6 +13,7 @@ public class AdoptionRequest {
     private String userName;
     private String userEmail;
     private String petName;
+    private String userPhone;
 
     public AdoptionRequest() {
     }
@@ -138,4 +139,11 @@ public class AdoptionRequest {
     public void setPetName(String petName) {
         this.petName = petName;
     }
+    public String getUserPhone() {
+    return userPhone;
+}
+
+public void setUserPhone(String userPhone) {
+    this.userPhone = userPhone;
+}
 }

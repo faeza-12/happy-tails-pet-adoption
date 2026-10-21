@@ -202,43 +202,55 @@ public class PartnerDAO {
         }
     }
 
-    public List<AdoptionRequest> requests(int partnerId) throws SQLException {
-        List<AdoptionRequest> list = new ArrayList<>();
+    
+public List<AdoptionRequest> requests(int partnerId) throws SQLException {
+    List<AdoptionRequest> list = new ArrayList<>();
 
-        String sql = """
-                SELECT ar.id, ar.user_id, ar.pet_id, ar.message, ar.status,
-                       ar.created_at, u.name AS user_name,
-                       u.email AS user_email, p.name AS pet_name
-                FROM adoption_requests ar
-                JOIN users u ON u.id = ar.user_id
-                JOIN pets p ON p.id = ar.pet_id
-                WHERE p.partner_id = ?
-                ORDER BY ar.created_at DESC
-                """;
+    String sql = """
+            SELECT ar.id, ar.user_id, ar.pet_id, ar.message, ar.status,
+                   ar.created_at, u.name AS user_name,
+                   u.email AS user_email, u.phone AS user_phone,
+                   p.name AS pet_name
+            FROM adoption_requests ar
+            JOIN users u ON u.id = ar.user_id
+            JOIN pets p ON p.id = ar.pet_id
+            WHERE p.partner_id = ?
+            ORDER BY ar.created_at DESC
+            """;
 
-        try (Connection c = DatabaseConnection.getConnection();
-             PreparedStatement s = c.prepareStatement(sql)) {
-            s.setInt(1, partnerId);
+    try (Connection c = DatabaseConnection.getConnection();
+         PreparedStatement s = c.prepareStatement(sql)) {
 
-            try (ResultSet r = s.executeQuery()) {
-                while (r.next()) {
-                    AdoptionRequest a = new AdoptionRequest(
-                            r.getInt("id"),
-                            r.getInt("user_id"),
-                            r.getInt("pet_id"),
-                            r.getString("message"),
-                            r.getString("status"),
-                            r.getString("user_name"),
-                            r.getString("user_email"),
-                            r.getString("pet_name"));
+        s.setInt(1, partnerId);
 
-                    a.setCreatedAt(String.valueOf(r.getTimestamp("created_at")));
-                    list.add(a);
-                }
+        try (ResultSet r = s.executeQuery()) {
+            while (r.next()) {
+                AdoptionRequest a = new AdoptionRequest(
+                        r.getInt("id"),
+                        r.getInt("user_id"),
+                        r.getInt("pet_id"),
+                        r.getString("message"),
+                        r.getString("status"),
+                        r.getString("user_name"),
+                        r.getString("user_email"),
+                        r.getString("pet_name")
+                );
+
+                a.setUserPhone(r.getString("user_phone"));
+
+                Timestamp createdAt = r.getTimestamp("created_at");
+                a.setCreatedAt(
+                        createdAt == null ? "" : createdAt.toString()
+                );
+
+                list.add(a);
             }
         }
-        return list;
     }
+
+    return list;
+}
+
 
     private Partner readPartner(ResultSet r) throws SQLException {
         Partner p = new Partner();

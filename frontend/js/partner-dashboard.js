@@ -402,6 +402,7 @@ async function deletePartnerPet(petId) {
 // LOAD ADOPTION REQUESTS FOR THIS PARTNER'S PETS
 // ==========================================
 
+
 async function loadPartnerRequests() {
     partnerRequestList.replaceChildren();
     partnerRequestList.textContent = "Loading adoption requests...";
@@ -428,16 +429,27 @@ async function loadPartnerRequests() {
             card.className = "admin-request-card";
 
             const status = String(request.status || "PENDING").toUpperCase();
+            const email = String(request.userEmail || "").trim();
+            const phone = String(request.userPhone || "").trim();
 
-            let partnerMessage = "";
+            let partnerMessage;
 
             if (status === "APPROVED") {
                 partnerMessage = "Happy Tails admin approved this request.";
             } else if (status === "REJECTED") {
                 partnerMessage = "Happy Tails admin rejected this request.";
             } else {
-                partnerMessage = "Waiting for Happy Tails admin to review this request.";
+                partnerMessage =
+                    "Waiting for Happy Tails admin to review this request.";
             }
+
+            const emailLink = email
+                ? `<a href="mailto:${escapeHTML(email)}">Email adopter</a>`
+                : `<span>Email not available</span>`;
+
+            const phoneLink = phone
+                ? `<a href="tel:${escapeHTML(phone)}">Call adopter</a>`
+                : `<span>Phone number not available</span>`;
 
             card.innerHTML = `
                 <div class="admin-request-heading">
@@ -453,12 +465,33 @@ async function loadPartnerRequests() {
 
                 <p>
                     <strong>${escapeHTML(request.userName || "Adopter")}</strong>
-                    · ${escapeHTML(request.userEmail || "")}
                 </p>
 
-                <p>${escapeHTML(request.message || "No message supplied.")}</p>
+                <p>
+                    <strong>Email:</strong>
+                    ${escapeHTML(email || "Not provided")}
+                </p>
 
-                <p>${escapeHTML(request.createdAt || "")}</p>
+                <p>
+                    <strong>Phone:</strong>
+                    ${escapeHTML(phone || "Not provided")}
+                </p>
+
+                <div class="partner-contact-actions">
+                    ${phoneLink}
+                    ·
+                    ${emailLink}
+                </div>
+
+                <p>
+                    <strong>Message:</strong>
+                    ${escapeHTML(request.message || "No message supplied.")}
+                </p>
+
+                <p>
+                    <strong>Requested on:</strong>
+                    ${escapeHTML(request.createdAt || "Date unavailable")}
+                </p>
 
                 <p class="partner-request-note">
                     ${escapeHTML(partnerMessage)}
@@ -473,6 +506,7 @@ async function loadPartnerRequests() {
             "Could not load adoption requests: " + error.message;
     }
 }
+
 
 // ==========================================
 // REFRESH BUTTON

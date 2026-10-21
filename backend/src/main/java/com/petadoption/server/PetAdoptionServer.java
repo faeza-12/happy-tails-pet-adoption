@@ -1789,6 +1789,10 @@ public class PetAdoptionServer {
                         request.getUserEmail()
                 )
                 + "\","
+                
+                + "\"userPhone\":\"" + escapeJson(
+                        request.getUserPhone()
+                ) + "\","
 
                 + "\"petName\":\""
                 + escapeJson(
@@ -1830,7 +1834,25 @@ public class PetAdoptionServer {
                 String result=partnerService.register(p,d.get("password"),d.get("confirmPassword"));
                 sendJson(exchange,"SUCCESS".equals(result)?200:400,"SUCCESS".equals(result)?"{\"success\":true,\"message\":\"Registration submitted for admin approval.\"}":jsonError(result)); return;
             }
-            Map<String,String> d=exchange.getRequestMethod().equalsIgnoreCase("GET")?parseFormData(exchange.getRequestURI().getRawQuery()):parseFormData(readRequestBody(exchange));
+            
+Map<String, String> d;
+
+String method = exchange.getRequestMethod();
+
+if (method.equalsIgnoreCase("GET")
+        || method.equalsIgnoreCase("DELETE")) {
+
+    d = parseFormData(
+            exchange.getRequestURI().getRawQuery()
+    );
+
+} else {
+
+    d = parseFormData(
+            readRequestBody(exchange)
+    );
+}
+
             int userId=Integer.parseInt(d.getOrDefault("userId","0"));
             if(path.equals("/api/partner/profile")){ Partner p=partnerService.profile(userId); if(p==null){sendJson(exchange,404,jsonError("Partner profile not found."));return;} sendJson(exchange,200,"{\"success\":true,\"partner\":"+partnerToJson(p)+"}");return; }
             if(path.equals("/api/partner/pets") && exchange.getRequestMethod().equalsIgnoreCase("GET")){ List<Pet> list=partnerService.pets(userId); sendJson(exchange,200,"{\"success\":true,\"pets\":"+petsToJson(list)+"}");return; }
