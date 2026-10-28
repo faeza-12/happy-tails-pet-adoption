@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Report Cover Page - Happy Tails Pet Adoption System</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cover-navy: #0d1b2a;
+            --cover-deep-blue: #1b263b;
+            --cover-gold: #c59b27;
+            --cover-gold-light: #fef9e7;
+            --cover-gold-border: rgba(197, 155, 39, 0.4);
+            --cover-text-light: #e0e1dd;
+            --cover-accent-coral: #e06d48;
+            --card-inner-bg: rgba(255, 255, 255, 0.04);
+            --card-inner-border: rgba(197, 155, 39, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #0b131e;
+            color: #e0e1dd;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top Action Bar (Hidden in print) */
+        .cover-toolbar {
+            width: 100%;
+            max-width: 820px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(27, 38, 59, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 1px solid rgba(197, 155, 39, 0.3);
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .tb-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .tb-link {
+            color: #a0aec0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .tb-link:hover {
+            color: #ffffff;
+        }
+
+        .tb-hint {
+            font-size: 11.5px;
+            color: var(--cover-gold);
+            background: rgba(197, 155, 39, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(197, 155, 39, 0.2);
+        }
+
+        .tb-print-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #c59b27 0%, #e0ac2b 100%);
+            color: #0d1b2a;
+            border: none;
+            padding: 9px 22px;
+            border-radius: 50px;
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(197, 155, 39, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .tb-print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(197, 155, 39, 0.5);
+        }
+
+        /* =====================================================================
+           A4 REPORT FRONT COVER SHEET
+           Standard A4 Aspect Ratio (210mm x 297mm)
+           ===================================================================== */
+        .report-sheet {
+            width: 100%;
+            max-width: 820px;
+            min-height: 1140px;
+            background: radial-gradient(circle at 50% 20%, #152238 0%, #0d1724 70%, #080f18 100%);
+            border: 1px solid rgba(197, 155, 39, 0.35);
+            border-radius: 12px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.65);
+            padding: 48px 52px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative Formal Border Inset */
+        .report-sheet::before {
+            content: "";
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            right: 18px;
+            bottom: 18px;
+            border: 2px solid var(--cover-gold);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .report-sheet::after {
+            content: "";
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            right: 24px;
+            bottom: 24px;
+            border: 1px solid rgba(197, 155, 39, 0.3);
+            border-radius: 6px;
+            pointer-events: none;
+        }
+
+        /* Corner Floral/Geometric Ornaments */
+        .ornament {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border-color: var(--cover-gold);
+            pointer-events: none;
+        }
+        .ornament-tl { top: 22px; left: 22px; border-top: 3px solid; border-left: 3px solid; }
+        .ornament-tr { top: 22px; right: 22px; border-top: 3px solid; border-right: 3px solid; }
+        .ornament-bl { bottom: 22px; left: 22px; border-bottom: 3px solid; border-left: 3px solid; }
+        .ornament-br { bottom: 22px; right: 22px; border-bottom: 3px solid; border-right: 3px solid; }
+
+        /* Top Header (Institution / Course) */
+        .cover-header {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding-top: 10px;
+        }
+
+        .institution-title {
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            color: var(--cover-gold);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .course-title {
+            font-size: 12px;
+            font-weight: 500;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Crest / Emblem */
+        .crest-wrap {
+            margin: 24px auto 16px auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .shield-crest {
+            width: 86px;
+            height: 86px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, rgba(197, 155, 39, 0.15) 0%, rgba(27, 38, 59, 0.7) 100%);
+            border: 2px solid var(--cover-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            box-shadow: 0 0 35px rgba(197, 155, 39, 0.2);
+        }
+
+        /* Center Section: Main Title & Degree text */
+        .cover-body {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            margin: 10px 0;
+        }
+
+        .report-prefix {
+            font-family: 'Cinzel', serif;
+            font-size: 13.5px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .main-project-title {
+            font-family: 'Cinzel', serif;
+            font-size: 34px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            line-height: 1.25;
+            text-shadow: 0 4px 18px rgba(0, 0, 0, 0.7);
+            margin-bottom: 10px;
+        }
+
+        .main-project-title span {
+            color: var(--cover-gold);
+        }
+
+        .project-tagline {
+            font-size: 13.5px;
+            color: #94a3b8;
+            max-width: 580px;
+            margin: 0 auto 18px auto;
+            line-height: 1.5;
+        }
+
+        .fulfillment-text {
+            font-size: 11.5px;
+            color: #94a3b8;
+            font-style: italic;
+            max-width: 520px;
+            margin: 0 auto 22px auto;
+            line-height: 1.55;
+            border-top: 1px solid rgba(197, 155, 39, 0.2);
+            border-bottom: 1px solid rgba(197, 155, 39, 0.2);
+            padding: 8px 0;
+        }
+
+        /* =====================================================================
+           SYSTEM SETUP & CONFIGURATION PROFILE (Embedded in Cover)
+           ===================================================================== */
+        .specs-panel {
+            background: rgba(13, 23, 36, 0.85);
+            border: 1.5px solid var(--cover-gold-border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 0 auto 24px auto;
+            max-width: 680px;
+            text-align: left;
+            position: relative;
+            z-index: 2;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .specs-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(197, 155, 39, 0.2);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .specs-header h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--cover-gold);
+            text-transform: uppercase;
+        }
+
+        .specs-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            background: rgba(197, 155, 39, 0.15);
+            color: var(--cover-gold);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--cover-gold-border);
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 18px;
+            font-size: 11.5px;
+        }
+
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .spec-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .spec-val {
+            font-family: 'JetBrains Mono', monospace;
+            color: #f1f5f9;
+            font-size: 11px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 3px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            word-break: break-all;
+        }
+
+        /* =====================================================================
+           SUBMISSION BOX (Editable / Formal Layout)
+           ===================================================================== */
+        .submission-card {
+            background: linear-gradient(145deg, rgba(27, 38, 59, 0.8) 0%, rgba(13, 23, 36, 0.9) 100%);
+            border: 1.5px solid var(--cover-gold);
+            border-radius: 8px;
+            padding: 22px 28px;
+            max-width: 680px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .submission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            text-align: left;
+        }
+
+        .sub-col h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--cover-gold);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(197, 155, 39, 0.3);
+            padding-bottom: 4px;
+        }
+
+        .sub-field {
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .sub-field .lbl {
+            color: #94a3b8;
+            font-weight: 500;
+            display: inline-block;
+            width: 72px;
+        }
+        .sub-field .val {
+            color: #ffffff;
+            font-weight: 600;
+            outline: none;
+            padding: 1px 4px;
+            border-radius: 3px;
+            transition: background 0.2s;
+        }
+        .sub-field .val:focus {
+            background: rgba(197, 155, 39, 0.2);
+            box-shadow: 0 0 0 1px var(--cover-gold);
+        }
+
+        .cover-footer-note {
+            text-align: center;
+            margin-top: 14px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(197, 155, 39, 0.15);
+            font-size: 11px;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+        }
+
+        /* PRINT STYLES (Exact A4 Page Formatting) */
+        @media print {
+            body {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .cover-toolbar {
+                display: none !important;
+            }
+            .report-sheet {
+                box-shadow: none !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                height: 100vh !important;
+                min-height: 100vh !important;
+                border-radius: 0 !important;
+                border: 2px solid #000 !important;
+                padding: 40px !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .report-sheet::before {
+                border-color: #c59b27 !important;
+            }
+            .report-sheet::after {
+                border-color: rgba(197, 155, 39, 0.5) !important;
+            }
+            .sub-field .val {
+                background: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .report-sheet {
+                padding: 30px 20px;
+            }
+            .main-project-title {
+                font-size: 24px;
+            }
+            .specs-grid,
+            .submission-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Toolbar (Excluded in Print/PDF export) -->
+    <header class="cover-toolbar">
+        <div class="tb-left">
+            <a href="index.html" class="tb-link">← Happy Tails Home</a>
+            <span class="tb-hint">💡 Tip: Click any student or guide field below to edit before printing!</span>
+        </div>
+        <button onclick="window.print()" class="tb-print-btn">
+            <span>🖨️</span> Save Cover as PDF / Print
+        </button>
+    </header>
+
+    <!-- Main Report Front Cover (A4 Sheet) -->
+    <main class="report-sheet" id="reportFrontCover">
+
+        <!-- Corner Ornaments -->
+        <div class="ornament ornament-tl" aria-hidden="true"></div>
+        <div class="ornament ornament-tr" aria-hidden="true"></div>
+        <div class="ornament ornament-bl" aria-hidden="true"></div>
+        <div class="ornament ornament-br" aria-hidden="true"></div>
+
+        <!-- Top Institution / Academic Header -->
+        <header class="cover-header">
+            <div class="institution-title" contenteditable="true" spellcheck="false" title="Click to edit institution">
+                Department of Computer Science & Engineering
+            </div>
+            <div class="course-title" contenteditable="true" spellcheck="false" title="Click to edit course name">
+                Object Oriented Programming & Web Software Systems Laboratory
+            </div>
+        </header>
+
+        <!-- Emblem / Shield Crest -->
+        <div class="crest-wrap">
+            <div class="shield-crest">
+                🐾
+            </div>
+        </div>
+
+        <!-- Center Section: Title & Formal Submission Subtitle -->
+        <section class="cover-body">
+            <div class="report-prefix">
+                PROJECT REPORT ON
+            </div>
+
+            <h1 class="main-project-title">
+                HAPPY TAILS <span>PET ADOPTION</span> SYSTEM
+            </h1>
+
+            <p class="project-tagline" contenteditable="true" spellcheck="false">
+                A Comprehensive Full-Stack Animal Rescue, Adoption Tracking & Partner Shelter Management Platform
+            </p>
+
+            <div class="fulfillment-text" contenteditable="true" spellcheck="false">
+                Submitted in partial fulfillment of the requirements for the degree of<br>
+                <strong>Bachelor of Technology in Computer Science & Engineering</strong>
+            </div>
+
+            <!-- Technical Setup & Architectural Specifications Panel -->
+            <div class="specs-panel">
+                <div class="specs-header">
+                    <h3>System Architecture & Local Setup Profile</h3>
+                    <span class="specs-badge">Full-Stack Blueprint</span>
+                </div>
+
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <span class="spec-label">1. Database Layer (MySQL 8.0)</span>
+                        <span class="spec-val">mysql -u root -p &lt; database\database.sql (Port 3306)</span>
+                    </div>
+
+                    <div class="spec-item">
+                        <span class="spec-label">2. Backend Engine (Java 21 SE)</span>
+                        <span class="spec-val">.\apache-maven-3.9.16\bin\mvn.cmd exec:java (Port 8080)</span>
+                    </div>
+
+                    <div class="spec-item">
+                        <span class="spec-label">3. Frontend Portals (HTML5/CSS3/JS)</span>
+                        <span class="spec-val">python -m http.server 3000 (Port 3000)</span>
+                    </div>
+
+                    <div class="spec-item">
+                        <span class="spec-label">4. System Admin Credentials</span>
+                        <span class="spec-val">admin@petadoption.com / Admin@123</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formal Submission Details Box (Editable) -->
+            <div class="submission-card">
+                <div class="submission-grid">
+                    
+                    <!-- Submitted By Column -->
+                    <div class="sub-col">
+                        <h4>SUBMITTED BY:</h4>
+                        <div class="sub-field">
+                            <span class="lbl">Name:</span>
+                            <span class="val" contenteditable="true" spellcheck="false">Muhammed Althaf S</span>
+                        </div>
+                        <div class="sub-field">
+                            <span class="lbl">Reg. No:</span>
+                            <span class="val" contenteditable="true" spellcheck="false">[Your Roll / Reg No]</span>
+                        </div>
+                        <div class="sub-field">
+                            <span class="lbl">Course:</span>
+                            <span class="val" contenteditable="true" spellcheck="false">B.Tech - CSE</span>
+                        </div>
+                        <div class="sub-field">
+                            <span class="lbl">Semester:</span>
+                            <span class="val" contenteditable="true" spellcheck="false">Semester V / Academic Year 2026</span>
+                        </div>
+                    </div>
+
+                    <!-- Guided By Column -->
+                    <div class="sub-col">
+                        <h4>UNDER THE GUIDANCE OF:</h4>
+                        <div class="sub-field">
+                            <span class="lbl">Guide:</span>
+                            <span class="val" contenteditable="true" spellcheck="false">[Name of Faculty / Guide]</span>
+                        </div>
+                        <div class="sub-field">
+                            <span class="lbl">Designation:</span>
+                            <span class="val" contenteditable="true" spellcheck="false">Assistant Professor / HOD</span>
+                        </div>
+                        <div class="sub-field">
+                            <span class="lbl">Department:</span>
+                            <span class="val" contenteditable="true" spellcheck="false">Dept. of Computer Science</span>
+                        </div>
+                        <div class="sub-field">
+                            <span class="lbl">Institution:</span>
+                            <span class="val" contenteditable="true" spellcheck="false">[Institute / University Name]</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cover-footer-note" contenteditable="true" spellcheck="false">
+                    Academic Year 2026 • Happy Tails Project Repository: github.com/faeza-12/happy-tails-pet-adoption
+                </div>
+            </div>
+        </section>
+
+        <!-- Blank spacer for A4 balance -->
+        <div></div>
+
+    </main>
+
+</body>
+</html>
