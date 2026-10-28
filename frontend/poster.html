@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Tails - System Architecture & Setup Poster 🐾</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --brand-primary: #d9623c;
+            --brand-primary-light: #fff3ed;
+            --brand-primary-glow: rgba(217, 98, 60, 0.18);
+            
+            --tier-db: #0284c7;
+            --tier-db-light: #f0f9ff;
+            --tier-db-border: #bae6fd;
+            
+            --tier-api: #059669;
+            --tier-api-light: #ecfdf5;
+            --tier-api-border: #a7f3d0;
+            
+            --tier-ui: #d9623c;
+            --tier-ui-light: #fff3ed;
+            --tier-ui-border: #fed7aa;
+            
+            --bg-page: #f8f6f2;
+            --bg-card: #ffffff;
+            --text-dark: #1e1b18;
+            --text-muted: #5e5249;
+            --text-subtle: #8a7a70;
+            --border: #e6dcce;
+            
+            --shadow-card: 0 10px 30px rgba(50, 30, 20, 0.05);
+            --shadow-float: 0 20px 40px rgba(50, 30, 20, 0.09);
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding: 30px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top Action Bar (hidden in print) */
+        .poster-actions-bar {
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .back-btn:hover {
+            color: var(--brand-primary);
+        }
+
+        .print-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--brand-primary);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px var(--brand-primary-glow);
+            transition: transform 0.2s, background 0.2s;
+        }
+        .print-btn:hover {
+            background: #c3522d;
+            transform: translateY(-1px);
+        }
+
+        /* Poster Canvas */
+        .poster-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            border: 2px solid var(--border);
+            box-shadow: var(--shadow-float);
+            padding: 44px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background Watermark/Accent */
+        .poster-container::before {
+            content: "🐾";
+            position: absolute;
+            top: -30px;
+            right: -20px;
+            font-size: 260px;
+            opacity: 0.03;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Poster Header */
+        .poster-header {
+            text-align: center;
+            margin-bottom: 38px;
+            position: relative;
+        }
+
+        .poster-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--brand-primary-light);
+            color: var(--brand-primary);
+            border: 1px solid rgba(217, 98, 60, 0.25);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .poster-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 44px;
+            font-weight: 900;
+            color: var(--text-dark);
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
+        .poster-title span {
+            color: var(--brand-primary);
+        }
+
+        .poster-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 780px;
+            margin: 0 auto 20px auto;
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tech-pill {
+            background: #f4efe9;
+            color: var(--text-dark);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid #e2d7cc;
+        }
+
+        /* ===================================================================
+           SECTION 1: THREE-TIER ARCHITECTURE OVERVIEW
+           =================================================================== */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--border);
+        }
+        .section-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+        .section-header .sec-badge {
+            background: #eee8e0;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+        }
+
+        .arch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr 1.1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .arch-card {
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 2px solid;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            box-shadow: var(--shadow-card);
+            position: relative;
+        }
+
+        .arch-card.tier-database {
+            background: var(--tier-db-light);
+            border-color: var(--tier-db-border);
+        }
+        .arch-card.tier-backend {
+            background: var(--tier-api-light);
+            border-color: var(--tier-api-border);
+        }
+        .arch-card.tier-frontend {
+            background: var(--tier-ui-light);
+            border-color: var(--tier-ui-border);
+        }
+
+        .tier-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .tier-step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            color: white;
+        }
+        .tier-database .tier-step-num { background: var(--tier-db); }
+        .tier-backend .tier-step-num { background: var(--tier-api); }
+        .tier-frontend .tier-step-num { background: var(--tier-ui); }
+
+        .tier-icon {
+            font-size: 32px;
+        }
+
+        .tier-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .tier-port {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(0,0,0,0.06);
+            color: var(--text-dark);
+            align-self: flex-start;
+        }
+
+        .tier-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .tier-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .tier-features li span.bullet {
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        /* ===================================================================
+           SECTION 2: STEP-BY-STEP SETUP WORKFLOW
+           =================================================================== */
+        .setup-workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .setup-step-box {
+            background: #faf8f5;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .setup-step-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .setup-badge {
+            background: var(--text-dark);
+            color: white;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .setup-step-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .setup-step-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .code-box {
+            background: #1e1b18;
+            color: #f3f0ec;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            position: relative;
+            overflow-x: auto;
+            border: 1px solid #332d28;
+        }
+        .code-box code {
+            color: #fbb086;
+        }
+        .code-box .comment {
+            color: #8c7e75;
+            font-style: italic;
+        }
+
+        /* ===================================================================
+           SECTION 3: PORTALS & DEFAULT CREDENTIALS CHEAT-SHEET
+           =================================================================== */
+        .bottom-summary-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+        }
+
+        .summary-card {
+            background: #ffffff;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+        }
+
+        .summary-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .portals-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .portal-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #faf8f5;
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+        .portal-item .name {
+            font-weight: 700;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .portal-item .link {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--brand-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Table */
+        .cred-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+        }
+        .cred-table th {
+            text-align: left;
+            padding: 8px;
+            background: #f5eee8;
+            color: var(--text-dark);
+            font-weight: 700;
+            border-radius: 4px;
+        }
+        .cred-table td {
+            padding: 8px;
+            border-bottom: 1px solid #f0e6de;
+            color: var(--text-muted);
+        }
+        .cred-table code {
+            font-family: 'JetBrains Mono', monospace;
+            background: #f7f1eb;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #b84b27;
+            font-size: 11.5px;
+        }
+
+        /* Poster Footer */
+        .poster-footer {
+            margin-top: 34px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-subtle);
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .poster-actions-bar {
+                display: none;
+            }
+            .poster-container {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                padding: 20px;
+                max-width: 100%;
+            }
+            .code-box {
+                background: #f4efe9 !important;
+                color: #222 !important;
+                border-color: #ddd !important;
+            }
+            .code-box code {
+                color: #b84b27 !important;
+            }
+        }
+
+        /* Mobile / Tablet Responsive */
+        @media (max-width: 900px) {
+            .arch-grid,
+            .setup-workflow-grid,
+            .bottom-summary-grid {
+                grid-template-columns: 1fr;
+            }
+            .poster-title {
+                font-size: 32px;
+            }
+            .poster-container {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Action Bar (Hidden on print) -->
+    <div class="poster-actions-bar">
+        <a href="index.html" class="back-btn">
+            <span>←</span> Back to Happy Tails Website
+        </a>
+        <button onclick="window.print()" class="print-btn">
+            <span>🖨️</span> Print / Save Poster as PDF
+        </button>
+    </div>
+
+    <!-- Main Poster Board -->
+    <main class="poster-container">
+
+        <!-- Header -->
+        <header class="poster-header">
+            <div class="poster-badge">
+                🐾 Official Architecture & Setup Blueprint
+            </div>
+            <h1 class="poster-title">
+                Happy Tails <span>Pet Adoption</span> System
+            </h1>
+            <p class="poster-subtitle">
+                A modern full-stack animal welfare platform connecting loving families with verified rescue shelters.
+            </p>
+            <div class="tech-tags">
+                <span class="tech-pill">Java 21 (Native HTTP Server)</span>
+                <span class="tech-pill">Apache Maven 3.9.16</span>
+                <span class="tech-pill">MySQL 8.0</span>
+                <span class="tech-pill">PBKDF2 Password Encryption</span>
+                <span class="tech-pill">Vanilla HTML5 / Modern CSS / ES6</span>
+            </div>
+        </header>
+
+        <!-- SECTION 1: SYSTEM ARCHITECTURE -->
+        <section aria-labelledby="secArch">
+            <div class="section-header">
+                <span class="sec-badge">LAYER OVERVIEW</span>
+                <h2 id="secArch">Three-Tier Architecture</h2>
+            </div>
+
+            <div class="arch-grid">
+
+                <!-- Tier 1: MySQL -->
+                <div class="arch-card tier-database">
+                    <div class="tier-top">
+                        <div class="tier-step-num">1</div>
+                        <span class="tier-icon">🗄️</span>
+                    </div>
+                    <h3 class="tier-title">MySQL Database</h3>
+                    <span class="tier-port">Port: 3306 • DB: pet_adoption_system</span>
+                    <ul class="tier-features">
+                        <li><span class="bullet">✓</span> <strong>users</strong>: Stores user, partner, and admin accounts</li>
+                        <li><span class="bullet">✓</span> <strong>partners</strong>: Shelter names, address, verification status</li>
+                        <li><span class="bullet">✓</span> <strong>pets</strong>: Pet profiles, breed, age, status, images</li>
+                        <li><span class="bullet">✓</span> <strong>adoption_requests</strong>: Multi-status workflow tracking</li>
+                        <li><span class="bullet">✓</span> <strong>Security</strong>: PBKDF2 salted hash password storage</li>
+                    </ul>
+                </div>
+
+                <!-- Tier 2: Java Backend -->
+                <div class="arch-card tier-backend">
+                    <div class="tier-top">
+                        <div class="tier-step-num">2</div>
+                        <span class="tier-icon">⚡</span>
+                    </div>
+                    <h3 class="tier-title">Java REST Server</h3>
+                    <span class="tier-port">Port: 8080 • com.petadoption</span>
+                    <ul class="tier-features">
+                        <li><span class="bullet">✓</span> <strong>HttpServer</strong>: High-throughput native Java server</li>
+                        <li><span class="bullet">✓</span> <strong>Thread Pool</strong>: 10 worker threads concurrent handling</li>
+                        <li><span class="bullet">✓</span> <strong>Services & DAOs</strong>: Modular business logic & SQL</li>
+                        <li><span class="bullet">✓</span> <strong>Endpoints</strong>: <code>/api/login</code>, <code>/api/pets</code>, <code>/api/partner/register</code></li>
+                        <li><span class="bullet">✓</span> <strong>Health API</strong>: <code>GET /api/health</code> instant ping</li>
+                    </ul>
+                </div>
+
+                <!-- Tier 3: Frontend -->
+                <div class="arch-card tier-frontend">
+                    <div class="tier-top">
+                        <div class="tier-step-num">3</div>
+                        <span class="tier-icon">🖥️</span>
+                    </div>
+                    <h3 class="tier-title">Web Frontend Portals</h3>
+                    <span class="tier-port">Port: 3000 • HTML / CSS / JS</span>
+                    <ul class="tier-features">
+                        <li><span class="bullet">✓</span> <strong>Adopter Portal</strong>: Browse pets, apply for adoption</li>
+                        <li><span class="bullet">✓</span> <strong>Partner Portal</strong>: Minimal login & shelter register</li>
+                        <li><span class="bullet">✓</span> <strong>Admin Portal</strong>: Review shelters & approve requests</li>
+                        <li><span class="bullet">✓</span> <strong>Zero Framework</strong>: Fast, pure DOM & Fetch API</li>
+                        <li><span class="bullet">✓</span> <strong>Responsive</strong>: Optimized for mobile & desktop</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 2: STEP-BY-STEP SETUP BLUEPRINT -->
+        <section aria-labelledby="secSetup">
+            <div class="section-header">
+                <span class="sec-badge">EXECUTION GUIDE</span>
+                <h2 id="secSetup">Step-by-Step Setup Blueprint</h2>
+            </div>
+
+            <div class="setup-workflow-grid">
+
+                <!-- Step 1 -->
+                <div class="setup-step-box">
+                    <div class="setup-step-header">
+                        <span class="setup-badge">STEP 1</span>
+                        <h3 class="setup-step-title">Initialize Database</h3>
+                    </div>
+                    <p class="setup-step-desc">
+                        Ensure MySQL is running on port 3306 and import the database schema:
+                    </p>
+                    <div class="code-box">
+                        <span class="comment"># In MySQL Workbench or CLI:</span><br>
+                        <code>mysql -u root -p &lt; database\database.sql</code><br><br>
+                        <span class="comment"># Check DatabaseConnection.java:</span><br>
+                        <code>URL: localhost:3306/pet_adoption_system</code><br>
+                        <code>USERNAME: root | PASSWORD: [your_pass]</code>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="setup-step-box">
+                    <div class="setup-step-header">
+                        <span class="setup-badge">STEP 2</span>
+                        <h3 class="setup-step-title">Compile & Start Backend</h3>
+                    </div>
+                    <p class="setup-step-desc">
+                        Use the bundled Maven binary to compile and start the Java server:
+                    </p>
+                    <div class="code-box">
+                        <span class="comment"># 1. Compile:</span><br>
+                        <code>.\apache-maven-3.9.16\bin\mvn.cmd -f backend\pom.xml clean compile</code><br><br>
+                        <span class="comment"># 2. Run Server:</span><br>
+                        <code>.\apache-maven-3.9.16\bin\mvn.cmd -f backend\pom.xml exec:java</code>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="setup-step-box">
+                    <div class="setup-step-header">
+                        <span class="setup-badge">STEP 3</span>
+                        <h3 class="setup-step-title">Launch Frontend</h3>
+                    </div>
+                    <p class="setup-step-desc">
+                        Serve the frontend static files using Python or open index.html:
+                    </p>
+                    <div class="code-box">
+                        <span class="comment"># Start local HTTP server:</span><br>
+                        <code>python -m http.server 3000 --directory frontend</code><br><br>
+                        <span class="comment"># Open in browser:</span><br>
+                        <code>http://localhost:3000</code>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: PORTALS & CREDENTIALS -->
+        <section aria-labelledby="secSummary">
+            <div class="bottom-summary-grid">
+
+                <!-- Portals Map -->
+                <div class="summary-card">
+                    <h3><span>🌐</span> Portal Sitemap & Navigation</h3>
+                    <div class="portals-list">
+                        <div class="portal-item">
+                            <span class="name">🏠 Public Home & Showcase</span>
+                            <a href="index.html" class="link">index.html</a>
+                        </div>
+                        <div class="portal-item">
+                            <span class="name">🐶 Pet Catalog & Search</span>
+                            <a href="pets.html" class="link">pets.html</a>
+                        </div>
+                        <div class="portal-item">
+                            <span class="name">🤝 Minimal Partner Portal (Login)</span>
+                            <a href="partner-login.html" class="link">partner-login.html</a>
+                        </div>
+                        <div class="portal-item">
+                            <span class="name">📝 Partner Shelter Registration</span>
+                            <a href="partner-register.html" class="link">partner-register.html</a>
+                        </div>
+                        <div class="portal-item">
+                            <span class="name">📊 Shelter Management Dashboard</span>
+                            <a href="partner-dashboard.html" class="link">partner-dashboard.html</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Default Credentials & Endpoints -->
+                <div class="summary-card">
+                    <h3><span>🔑</span> Quick Reference Cheat-Sheet</h3>
+                    <table class="cred-table">
+                        <thead>
+                            <tr>
+                                <th>Role / Service</th>
+                                <th>Access Point / Credential</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Demo Admin</strong></td>
+                                <td><code>admin@petadoption.com</code> / <code>Admin@123</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Backend API</strong></td>
+                                <td><code>http://localhost:8080/api/...</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Health Ping</strong></td>
+                                <td><code>GET http://localhost:8080/api/health</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>MySQL Port</strong></td>
+                                <td><code>localhost:3306</code> (Database: <code>pet_adoption_system</code>)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Poster Footer -->
+        <footer class="poster-footer">
+            <div>
+                🐾 <strong>Happy Tails Pet Adoption System</strong> • Engineered with Java, MySQL & Modern Web
+            </div>
+            <div>
+                Repository: <code>github.com/faeza-12/happy-tails-pet-adoption</code>
+            </div>
+        </footer>
+
+    </main>
+
+</body>
+</html>
